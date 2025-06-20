@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Arcanoid.Scripts.Game.Common
+namespace Arcanoid.Scripts.Game
 {
     public class BlockSpawner : MonoBehaviour
     {
@@ -9,19 +10,22 @@ namespace Arcanoid.Scripts.Game.Common
         public int rows = 3;
         public float spacing = 0.1f;
 
-        private List<GameObject> blocks = new List<GameObject>();
+        public float verticalOffset = 0.5f;
+
+        private List<GameObject> _blocks = new List<GameObject>();
         
         void Start()
         {
             SpawnBlocks();
         }
 
-        public int ExistBlocksCount()
+        public async Task<int> ExistBlocksCount()
         {
+            await Task.Delay(1000);
             int exist = 0;
-            foreach (var block in blocks)
+            foreach (var block in _blocks)
             {
-                if(block != null) exist++;
+                if (block != null) exist++;
             }
             return exist;
         }
@@ -42,7 +46,7 @@ namespace Arcanoid.Scripts.Game.Common
 
             Vector3 startPos = new Vector3(
                 bottomLeft.x + (screenWidth - (blocksPerRow * (blockWidth + spacing)) + spacing) / 2 + blockWidth / 2,
-                topRight.y - 1f,
+                topRight.y - verticalOffset,
                 0);
 
             for (int row = 0; row < rows; row++)
@@ -55,7 +59,7 @@ namespace Arcanoid.Scripts.Game.Common
                         0);
 
                     var block = Instantiate(blockPrefab, pos, Quaternion.identity, this.transform);
-                    blocks.Add(block);
+                    _blocks.Add(block);
                     block.SetActive(true);
                 }
             }

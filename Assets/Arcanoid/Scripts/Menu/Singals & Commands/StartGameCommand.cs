@@ -1,13 +1,11 @@
 ﻿using strange.extensions.command.impl;
-using UnityEngine;
 
-namespace Arcanoid.Scripts.Menu
+namespace Arcanoid.Scripts.Menu.Singals___Commands
 {
     public class StartGameCommand : Command
     {
         public override void Execute()
         {
-            Debug.Log("loas game");
             UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
         }
     }

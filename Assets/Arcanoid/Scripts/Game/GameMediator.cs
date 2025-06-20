@@ -1,30 +1,55 @@
-﻿using strange.extensions.mediation.impl;
-using UnityEngine;
+﻿using Arcanoid.Scripts.Game.Ball;
+using Arcanoid.Scripts.Game.Signals___Commands;
+using Arcanoid.Scripts.Game.UI;
+using strange.extensions.mediation.impl;
 
 namespace Arcanoid.Scripts.Game
 {
     public class GameMediator : Mediator
     {
-        [Inject] public GameView view { get; set; }
-        [Inject] public BallCollisionSignal collisionSignal { get; set; }
+        [Inject] public GameView View { get; set; }
+        [Inject] public BallCollisionSignal CollisionSignal { get; set; }
+        [Inject] public GameStateSignal GameStateSignal { get; set; }
+        [Inject] public GameStateModel GameStateModel { get; set; }
 
-
+        private GameUIView UIView => View.GameUIView;
+        
+        private int _score;
+        
         private void Start()
         {
-            collisionSignal.AddListener(CheckExistedBlocks);
+            CollisionSignal.AddListener(OnBallCollider);
         }
 
-        private void CheckExistedBlocks(string s)
+        private async void OnBallCollider(string collisionTag)
         {
-            if (view.Spawner.ExistBlocksCount() == 0)
+            if(GameStateModel.CurrentState != GameState.PLAYING) return;
+            switch (collisionTag)
             {
-                Debug.LogError("win");
+                case "Block":
+                    _score++;
+                    
+                    UIView.SetScore(_score);
+                    
+                    if (await View.Spawner.ExistBlocksCount() == 0)
+                    {
+                        GameStateModel.SetState(GameState.WIN);
+                        GameStateSignal.Dispatch(GameState.WIN);
+                        UIView.ShowGameOverPanel(true, _score);
+                    }
+                    break;
+                
+                case "Bottom":
+                    GameStateModel.SetState(GameState.LOSE);
+                    GameStateSignal.Dispatch(GameState.LOSE);
+                    UIView.ShowGameOverPanel(false, _score);
+                    break;
             }
         }
 
         private void OnDestroy()
         {
-            collisionSignal.RemoveListener(CheckExistedBlocks);
+            CollisionSignal.RemoveListener(OnBallCollider);
         }
     }
 

@@ -1,3 +1,4 @@
+using Arcanoid.Scripts.Menu.Singals___Commands;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.impl;
@@ -19,7 +20,6 @@ namespace Arcanoid.Scripts.Menu
         protected override void mapBindings()
         {
             injectionBinder.Bind<StartGameSignal>().ToSingleton();
-            
 
             commandBinder.Bind<StartGameSignal>().To<StartGameCommand>();
             mediationBinder.Bind<MenuView>().To<MenuMediator>();

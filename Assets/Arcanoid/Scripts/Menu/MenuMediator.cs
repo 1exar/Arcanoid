@@ -1,21 +1,21 @@
-﻿using strange.extensions.mediation.impl;
-using UnityEngine;
+﻿using Arcanoid.Scripts.Menu.Singals___Commands;
+using strange.extensions.mediation.impl;
 
 namespace Arcanoid.Scripts.Menu
 {
     public class MenuMediator : Mediator
     {
-        [Inject] public MenuView view { get; set; }
-        [Inject] public StartGameSignal startGameSignal { get; set; }
+        [Inject] public MenuView View { get; set; }
+        [Inject] public StartGameSignal StartGameSignal { get; set; }
 
         public override void OnRegister()
         {
-            view.startButton.onClick.AddListener(OnStartClicked);
+            View.startButton.onClick.AddListener(OnStartClicked);
         }
 
         private void OnStartClicked()
         {
-            startGameSignal.Dispatch();
+            StartGameSignal.Dispatch();
         }
     }
 }

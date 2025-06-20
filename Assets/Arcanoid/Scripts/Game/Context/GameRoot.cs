@@ -1,11 +1,10 @@
-﻿using a;
-using strange.extensions.context.impl;
+﻿using strange.extensions.context.impl;
 
-namespace Arcanoid.Scripts.Game
+namespace Arcanoid.Scripts.Game.Context
 {
     public class GameRoot : ContextView
     {
-        void Awake()
+        private void Awake()
         {
             context = new GameContext(this);
         }

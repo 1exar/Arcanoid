@@ -1,19 +1,17 @@
 ﻿using strange.extensions.command.impl;
 using UnityEngine;
 
-namespace Arcanoid.Scripts.Game
+namespace Arcanoid.Scripts.Game.Signals___Commands
 {
     public class GameStateCommand : Command
     {
-        [Inject] public string state { get; set; }
+        [Inject] public GameState State { get; set; }
+        [Inject] public GameStateModel GameStateModel { get; set; }
 
         public override void Execute()
         {
-            Debug.Log("Game ended: " + state);
-            if (state == "Lose")
-            {
-               // UnityEngine.SceneManagement.SceneManager.LoadScene("MenuScene");
-            }
+            GameStateModel.SetState(State);
+            Debug.Log($"Game State Changed → {State}");
         }
     }
 }

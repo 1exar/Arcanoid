@@ -1,26 +1,37 @@
-using System;
+using Arcanoid.Scripts.Game.Signals___Commands;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 
-namespace Arcanoid.Scripts.Game
+namespace Arcanoid.Scripts.Game.Ball
 {
     public class BallMediator : Mediator
     {
         
-        [Inject] public BallView view { get; set; }
-        [Inject] public BallCollisionSignal collisionSignal { get; set; }
+        [Inject] public BallView View { get; set; }
+        [Inject] public BallCollisionSignal CollisionSignal { get; set; }
+        [Inject] public GameStateSignal GameStateSignal { get; set; }
         
         private Rigidbody2D _rb;
         private float _speed;
 
         private void Start()
         {
-            _rb = view.RigidBody;
-            _speed = view.Speed;
+            _rb = View.RigidBody;
+            _speed = View.Speed;
             
             _rb.velocity = Vector2.up;
+            
+            GameStateSignal.AddOnce(OnGameEnd);
         }
 
+        private void OnGameEnd(GameState state)
+        {
+            if (state == GameState.LOSE || state == GameState.WIN)
+            {
+                _rb.velocity = Vector2.zero;
+            }
+        }
+        
         private void FixedUpdate()
         {
             _rb.velocity = _speed * (_rb.velocity.normalized);
@@ -36,17 +47,17 @@ namespace Arcanoid.Scripts.Game
             
             if (collision.gameObject.CompareTag("Block"))
             {
-                collisionSignal.Dispatch("Block");
                 Destroy(collision.gameObject);
+                CollisionSignal.Dispatch("Block");
             }
 
             _rb.velocity = dir * _speed;
         }
         
-        void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Bottom"))
-                collisionSignal.Dispatch("Bottom");
+                CollisionSignal.Dispatch("Bottom");
         }
     }
 }

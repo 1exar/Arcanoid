@@ -4,7 +4,7 @@ namespace Arcanoid.Scripts.Game
 {
     public class ScreenBoundsWalls : MonoBehaviour
     {
-        public float wallThickness = 1f;
+        [SerializeField] private float wallThickness = 1f;
 
         void Start()
         {
@@ -22,16 +22,12 @@ namespace Arcanoid.Scripts.Game
             float screenWidth = topRight.x - bottomLeft.x;
             float screenHeight = topRight.y - bottomLeft.y;
 
-            // Ліва стіна
             CreateWall(new Vector2(bottomLeft.x - wallThickness / 2, 0), new Vector2(wallThickness, screenHeight + 2));
 
-            // Права стіна
             CreateWall(new Vector2(topRight.x + wallThickness / 2, 0), new Vector2(wallThickness, screenHeight + 2));
 
-            // Верхня стіна
             CreateWall(new Vector2(0, topRight.y + wallThickness / 2), new Vector2(screenWidth + 2, wallThickness));
 
-            // Нижня зона поразки
             GameObject bottom = CreateWall(new Vector2(0, bottomLeft.y - wallThickness / 2), new Vector2(screenWidth + 2, wallThickness));
             bottom.tag = "Bottom";
             BoxCollider2D bc = bottom.GetComponent<BoxCollider2D>();
