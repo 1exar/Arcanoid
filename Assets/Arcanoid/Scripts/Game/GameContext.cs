@@ -16,6 +16,7 @@ namespace Arcanoid.Scripts.Game
             commandBinder.Bind<BallCollisionSignal>().To<BallCollisionCommand>();
 
             mediationBinder.Bind<GameView>().To<GameMediator>();
+            mediationBinder.Bind<BallView>().To<BallMediator>();
         }
     }
 }

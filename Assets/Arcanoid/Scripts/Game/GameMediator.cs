@@ -1,4 +1,5 @@
 ﻿using strange.extensions.mediation.impl;
+using UnityEngine;
 
 namespace Arcanoid.Scripts.Game
 {
@@ -7,14 +8,23 @@ namespace Arcanoid.Scripts.Game
         [Inject] public GameView view { get; set; }
         [Inject] public BallCollisionSignal collisionSignal { get; set; }
 
-        public override void OnRegister()
+
+        private void Start()
         {
-            view.ballCollision.OnCollisionEvent.AddListener(OnBallCollision);
+            collisionSignal.AddListener(CheckExistedBlocks);
         }
 
-        void OnBallCollision(string tag)
+        private void CheckExistedBlocks(string s)
         {
-            collisionSignal.Dispatch(tag);
+            if (view.Spawner.ExistBlocksCount() == 0)
+            {
+                Debug.LogError("win");
+            }
+        }
+
+        private void OnDestroy()
+        {
+            collisionSignal.RemoveListener(CheckExistedBlocks);
         }
     }
 

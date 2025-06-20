@@ -1,39 +1,48 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-namespace Arcanoid.Scripts.Game
+namespace Arcanoid.Scripts.Game.Common
 {
     public class BlockSpawner : MonoBehaviour
     {
         public GameObject blockPrefab;
         public int rows = 3;
-        public float spacing = 0.1f; // отступ между блоками
+        public float spacing = 0.1f;
 
+        private List<GameObject> blocks = new List<GameObject>();
+        
         void Start()
         {
             SpawnBlocks();
         }
 
+        public int ExistBlocksCount()
+        {
+            int exist = 0;
+            foreach (var block in blocks)
+            {
+                if(block != null) exist++;
+            }
+            return exist;
+        }
+        
         void SpawnBlocks()
         {
             Camera cam = Camera.main;
 
-            // Границы экрана в мировых координатах
             Vector2 bottomLeft = cam.ViewportToWorldPoint(new Vector3(0, 0));
             Vector2 topRight = cam.ViewportToWorldPoint(new Vector3(1, 1));
 
             float screenWidth = topRight.x - bottomLeft.x;
 
-            // Получаем ширину блока
             float blockWidth = blockPrefab.GetComponent<SpriteRenderer>().bounds.size.x;
             float blockHeight = blockPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
 
-            // Кол-во блоков, которое помещается по ширине с учетом spacing
             int blocksPerRow = Mathf.FloorToInt((screenWidth + spacing) / (blockWidth + spacing));
 
-            // Начальная позиция (левый верх)
             Vector3 startPos = new Vector3(
                 bottomLeft.x + (screenWidth - (blocksPerRow * (blockWidth + spacing)) + spacing) / 2 + blockWidth / 2,
-                topRight.y - 1f, // отступ сверху
+                topRight.y - 1f,
                 0);
 
             for (int row = 0; row < rows; row++)
@@ -46,6 +55,7 @@ namespace Arcanoid.Scripts.Game
                         0);
 
                     var block = Instantiate(blockPrefab, pos, Quaternion.identity, this.transform);
+                    blocks.Add(block);
                     block.SetActive(true);
                 }
             }
