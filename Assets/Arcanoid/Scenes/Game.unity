@@ -1174,6 +1174,10 @@ MonoBehaviour:
   starInactive: {fileID: 21300000, guid: 0fb6f46851989c643be85de453cca7e9, type: 3}
   restartButton: {fileID: 898327234}
   menuButton: {fileID: 632012402}
+  candyPopYScale: 1.05
+  candyPopSpeed: 1
+  candyRay: {fileID: 1583851420}
+  candyRaySpeed: 5
 --- !u!1 &810242198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1539,7 +1543,7 @@ RectTransform:
   m_GameObject: {fileID: 860129621}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1208311608}
@@ -1549,6 +1553,7 @@ RectTransform:
   - {fileID: 1637227104}
   - {fileID: 680551366}
   - {fileID: 1583851420}
+  - {fileID: 880717793}
   - {fileID: 1479447379}
   m_Father: {fileID: 2124169285}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1590,16 +1595,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880717792}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1583851420}
+  m_Father: {fileID: 860129622}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 11.25, y: 0.93}
+  m_AnchoredPosition: {x: -2.75, y: 205.48999}
   m_SizeDelta: {x: 345.38, y: 329.02}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &880717794
@@ -2499,7 +2504,7 @@ GameObject:
   - component: {fileID: 1583851422}
   - component: {fileID: 1583851421}
   m_Layer: 5
-  m_Name: Candy
+  m_Name: CandyRays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2516,8 +2521,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 880717793}
+  m_Children: []
   m_Father: {fileID: 860129622}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

@@ -21,7 +21,7 @@ namespace Arcanoid.Scripts.Game
 
         public async Task<int> ExistBlocksCount()
         {
-            await Task.Delay(1000);
+            await Task.Delay(500);
             int exist = 0;
             foreach (var block in _blocks)
             {

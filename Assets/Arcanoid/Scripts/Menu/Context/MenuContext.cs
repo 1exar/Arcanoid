@@ -4,7 +4,7 @@ using strange.extensions.command.impl;
 using strange.extensions.context.impl;
 using UnityEngine;
 
-namespace Arcanoid.Scripts.Menu
+namespace Arcanoid.Scripts.Menu.Context
 {
     public class MenuContext : MVCSContext
     {

@@ -1,4 +1,6 @@
+using System;
 using Arcanoid.Scripts.Game.Signals___Commands;
+using DG.Tweening;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 
@@ -14,12 +16,12 @@ namespace Arcanoid.Scripts.Game.Ball
         private Rigidbody2D _rb;
         private float _speed;
 
+        private bool _gameStart;
+
         private void Start()
         {
             _rb = View.RigidBody;
             _speed = View.Speed;
-            
-            _rb.velocity = Vector2.up;
             
             GameStateSignal.AddOnce(OnGameEnd);
         }
@@ -28,10 +30,20 @@ namespace Arcanoid.Scripts.Game.Ball
         {
             if (state == GameState.LOSE || state == GameState.WIN)
             {
-                _rb.velocity = Vector2.zero;
+                if(_rb != null)
+                    _rb.velocity = Vector2.zero;
             }
         }
-        
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0) && _gameStart == false)
+            {
+                _gameStart = true;
+                _rb.velocity = Vector2.up;
+            }
+        }
+
         private void FixedUpdate()
         {
             _rb.velocity = _speed * (_rb.velocity.normalized);
@@ -44,11 +56,22 @@ namespace Arcanoid.Scripts.Game.Ball
                 dir.x = Mathf.Sign(dir.x) * 0.2f;
             if (Mathf.Abs(dir.y) < 0.1f)
                 dir.y = Mathf.Sign(dir.y) * 0.2f;
+
+            
             
             if (collision.gameObject.CompareTag("Block"))
             {
-                Destroy(collision.gameObject);
-                CollisionSignal.Dispatch("Block");
+                var block = collision.gameObject;
+                block.transform.DOScale(Vector3.zero, .1f).OnComplete((() =>
+                {
+                    Destroy(block);
+                    CollisionSignal.Dispatch("Block");
+                }));
+            }
+            
+            if (collision.gameObject.CompareTag("Bottom"))
+            {
+                collision.gameObject.transform.DOShakeScale(.1f, .2f, 2);
             }
 
             _rb.velocity = dir * _speed;

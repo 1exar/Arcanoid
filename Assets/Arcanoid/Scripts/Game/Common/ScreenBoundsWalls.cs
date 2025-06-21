@@ -6,12 +6,12 @@ namespace Arcanoid.Scripts.Game
     {
         [SerializeField] private float wallThickness = 1f;
 
-        void Start()
+        private void Start()
         {
             CreateWalls();
         }
 
-        void CreateWalls()
+        private void CreateWalls()
         {
             Camera cam = Camera.main;
             float z = 0f;
