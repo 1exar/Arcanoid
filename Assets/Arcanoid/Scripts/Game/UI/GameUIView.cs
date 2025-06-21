@@ -27,10 +27,6 @@ namespace Arcanoid.Scripts.Game.UI
         [SerializeField] private List<Image> stars;
         [SerializeField] private Sprite starActive;
         [SerializeField] private Sprite starInactive;
-        
-        [Header("Buttons")]
-        [SerializeField] private Button restartButton;
-        [SerializeField] private Button menuButton;
 
         [Header("Animations")] 
         
@@ -44,6 +40,8 @@ namespace Arcanoid.Scripts.Game.UI
         [SerializeField] private RectTransform candyRay;
         [SerializeField] private float candyRaySpeed;
         
+        public Button restartButton;
+        public Button menuButton;
         
         private Sequence _candyPopSequence;
         private Sequence _raysSequence;
@@ -51,16 +49,6 @@ namespace Arcanoid.Scripts.Game.UI
         
         protected override void Start()
         {
-            restartButton.onClick.AddListener(() =>
-            {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
-            });
-            
-            menuButton.onClick.AddListener(() =>
-            {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
-            });
-            
             _candyPopSequence = DOTween.Sequence();
             _candyPopSequence.Append(engGameEmojy.rectTransform.DOScaleY(candyPopYScale, candyPopSpeed).From(1f).SetEase(Ease.InOutSine));
             _candyPopSequence.SetLoops(-1, LoopType.Yoyo);

@@ -1,4 +1,5 @@
 ﻿using Arcanoid.Scripts.Menu.Singals___Commands;
+using Arcanoid.Scripts.Services.Audio;
 using strange.extensions.mediation.impl;
 
 namespace Arcanoid.Scripts.Menu
@@ -7,6 +8,7 @@ namespace Arcanoid.Scripts.Menu
     {
         [Inject] public MenuView View { get; set; }
         [Inject] public StartGameSignal StartGameSignal { get; set; }
+        [Inject] public PlaySoundSignal PlaySoundSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -15,6 +17,7 @@ namespace Arcanoid.Scripts.Menu
 
         private void OnStartClicked()
         {
+            PlaySoundSignal.Dispatch(Sound.ButtonClick);
             StartGameSignal.Dispatch();
         }
         
