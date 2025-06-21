@@ -23,7 +23,7 @@ namespace Arcanoid.Scripts.Game
 
         private async void OnBallCollider(string collisionTag)
         {
-            if(GameStateModel.CurrentState != GameState.PLAYING) return;
+            if(GameStateModel.CurrentState != GameState.Playing) return;
             switch (collisionTag)
             {
                 case "Block":
@@ -33,15 +33,13 @@ namespace Arcanoid.Scripts.Game
                     
                     if (await View.Spawner.ExistBlocksCount() == 0)
                     {
-                        GameStateModel.SetState(GameState.WIN);
-                        GameStateSignal.Dispatch(GameState.WIN);
+                        GameStateSignal.Dispatch(GameState.Win);
                         UIView.ShowGameOverPanel(true, _score);
                     }
                     break;
                 
                 case "Bottom":
-                    GameStateModel.SetState(GameState.LOSE);
-                    GameStateSignal.Dispatch(GameState.LOSE);
+                    GameStateSignal.Dispatch(GameState.Lose);
                     UIView.ShowGameOverPanel(false, _score);
                     break;
             }

@@ -2,7 +2,7 @@
 {
     public class GameStateModel
     {
-        public GameState CurrentState { get; private set; } = GameState.PLAYING;
+        public GameState CurrentState { get; private set; } = GameState.Playing;
 
         public void SetState(GameState state)
         {

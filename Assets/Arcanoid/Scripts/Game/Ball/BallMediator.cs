@@ -1,4 +1,3 @@
-using System;
 using Arcanoid.Scripts.Game.Signals___Commands;
 using DG.Tweening;
 using strange.extensions.mediation.impl;
@@ -28,7 +27,7 @@ namespace Arcanoid.Scripts.Game.Ball
 
         private void OnGameEnd(GameState state)
         {
-            if (state == GameState.LOSE || state == GameState.WIN)
+            if (state == GameState.Lose || state == GameState.Win)
             {
                 if(_rb != null)
                     _rb.velocity = Vector2.zero;

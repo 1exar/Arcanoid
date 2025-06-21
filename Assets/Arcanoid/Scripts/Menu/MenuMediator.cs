@@ -17,5 +17,11 @@ namespace Arcanoid.Scripts.Menu
         {
             StartGameSignal.Dispatch();
         }
+        
+        public override void OnRemove()
+        {
+            View.startButton.onClick.RemoveListener(OnStartClicked);
+        }
+
     }
 }

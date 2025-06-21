@@ -2,8 +2,8 @@
 {
     public enum GameState
     {
-        PLAYING,
-        WIN,
-        LOSE
+        Playing,
+        Win,
+        Lose
     }
 }
